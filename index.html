@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>PySMT by pysmt</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">PySMT</h1>
+      <h2 class="project-tagline">pySMT: A solver-agnostic library for SMT formulae manipulation and solving</h2>
+      <a href="https://github.com/pysmt/pysmt" class="btn">View on GitHub</a>
+      <a href="https://github.com/pysmt/pysmt/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/pysmt/pysmt/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1></h1>
+
+<h1>
+<a id="-pysmt-a-library-for-smt-formulae-manipulation-and-solving" class="anchor" href="#-pysmt-a-library-for-smt-formulae-manipulation-and-solving" aria-hidden="true"><span class="octicon octicon-link"></span></a> pySMT: A library for SMT formulae manipulation and solving</h1>
+
+<p>pySMT makes working with Satisfiability Modulo Theory simple.</p>
+
+<p>Among others, you can:</p>
+
+<ul>
+<li>Define formulae in a solver independent way in a simple and
+inutitive way,</li>
+<li>Write ad-hoc simplifiers and operators,</li>
+<li>Dump your problems in the SMT-Lib format,</li>
+<li>Solve them using one of the native solvers, or by wrapping any
+SMT-Lib complaint solver.</li>
+</ul>
+
+<h1>
+<a id="supported-theories-and-solvers" class="anchor" href="#supported-theories-and-solvers" aria-hidden="true"><span class="octicon octicon-link"></span></a>Supported Theories and Solvers</h1>
+
+<p>pySMT provides methods to define a formula in Linear Real Arithmetic (LRA), Real Difference Logic (RDL), their combination (LIRA),
+Equalities and Uninterpreted Functions (EUF) and Bit-Vectors (BV). The following solvers are supported through native APIs:</p>
+
+<ul>
+<li>MathSAT (<a href="http://mathsat.fbk.eu/">http://mathsat.fbk.eu/</a>) &gt;= 5</li>
+<li>Z3 (<a href="http://z3.codeplex.com/releases">http://z3.codeplex.com/releases</a>) &gt;= 4</li>
+<li>CVC4 (<a href="http://cvc4.cs.nyu.edu/web/">http://cvc4.cs.nyu.edu/web/</a>)</li>
+<li>Yices 2 (<a href="http://yices.csl.sri.com/">http://yices.csl.sri.com/</a>)</li>
+<li>repycudd (<a href="https://github.com/pysmt/repycudd">https://github.com/pysmt/repycudd</a>)</li>
+<li>PicoSAT (<a href="http://fmv.jku.at/picosat/">http://fmv.jku.at/picosat/</a>)</li>
+</ul>
+
+<p>Additionally, you can use any SMT-LIB 2 compliant solver.</p>
+
+<p>PySMT assumes that the python bindings for the SMT Solver are installed and accessible from your PYTHONPATH. For Yices 2 we rely on pyices (<a href="https://github.com/cheshire/pyices">https://github.com/cheshire/pyices</a>).</p>
+
+<p>pySMT works on both Python 2 and Python 3. Some solvers support both versions (e.g., MathSAT) but in general, many solvers still support only Python 2.</p>
+
+<p>The following table summarizes the features supported via pySMT for
+each of the available solvers. (We indicate with square brackets the
+features that are supported by the solver itself by not by the current
+wrapper used within pySMT).</p>
+
+<p>=================   ==========   ==================   ==============   ==================   ==========
+  Solver              pySMT name   Supported Logics     Satisfiability   Model Construction   UNSAT-Core
+  =================   ==========   ==================   ==============   ==================   ==========
+  MathSAT             msat         QF_UFLIRA, QF_BV     Yes              Yes                  Yes
+  Z3                  z3           UFLIRA, [QF_BV]      Yes              Yes                  Yes
+  CVC4                cvc4         QF_UFLIRA, [QF_BV]   Yes              Yes                  No
+  Yices               yices        QF_UFLIRA, [QF_BV]   Yes              Yes                  No
+  SMT-Lib Interface        UFLIRA, [QF_BV]      Yes              Yes                  No [Yes]
+  PicoSAT             picosat      QF_BOOL              Yes              Yes                  No [Yes]
+  BDD (CUDD)          bdd          BOOL                 Yes              Yes                  No
+  =================   ==========   ==================   ==============   ==================   ==========</p>
+
+<p>The following table summarizes the features supported via pySMT for each of the available quantifier eliminators</p>
+
+<p>=====================   ==========   ================
+  Quantifier Eliminator   pySMT name   Supported Logics
+  =====================   ==========   ================
+  MathSAT FM              msat-fm      LRA
+  MathSAT LW              msat-lw      LRA
+  Z3                      z3           LRA, LIA
+  BDD (CUDD)              bdd          BOOL
+  =====================   ==========   ================</p>
+
+<p>The following table summarizes the features supported via pySMT for each of the available Craig interpolators</p>
+
+<p>============   ==========   =========================
+  Interpolator   pySMT name   Supported Logics
+  ============   ==========   =========================
+  MathSAT        msat         QF_UFLIA, QF_UFLRA, QF_BV
+  Z3             z3           QF_UFLIA, QF_UFLRA
+  ============   ==========   =========================</p>
+
+<h1>
+<a id="getting-started" class="anchor" href="#getting-started" aria-hidden="true"><span class="octicon octicon-link"></span></a>Getting Started</h1>
+
+<p>You can install the latest stable release of pySMT from PyPI:</p>
+
+<p># pip install pysmt
+this will additionally install the <em>pysmt-install</em> command, that can be used to install the solvers: e.g.,</p>
+
+<p>$ pysmt-install --check
+will show you which solvers have been found in your PYTHONPATH. For instructions on how to install each solver refer to the section on <em>solvers installation</em>.</p>
+
+<h1>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h1>
+
+<p>.. code:: python</p>
+
+<p>from pysmt.shortcuts import Symbol, And, Not, is_sat</p>
+
+<p>varA = Symbol("A") # Default type is Boolean
+  varB = Symbol("B")
+  f = And([varA, Not(varB)])
+  g = f.substitute({varB:varA})</p>
+
+<p>res = is_sat(f)
+  assert res # SAT
+  print("f := %s is SAT? %s" % (f, res))</p>
+
+<p>res = is_sat(g)
+  print("g := %s is SAT? %s" % (g, res))
+  assert not res # UNSAT</p>
+
+<p>A more complex example is the following:</p>
+
+<p>Lets consider the letters composing the words <em>HELLO</em> and <em>WORLD</em>,
+with a possible integer value between 1 and 10 to each of them.
+Is there a value for each letter so that H+E+L+L+O = W+O+R+L+D = 25?</p>
+
+<p>The following is the pySMT code for solving this problem:</p>
+
+<p>.. code:: python</p>
+
+<p>from pysmt.shortcuts import Symbol, And, GE, LT, Plus, Equals, Int, get_model
+  from pysmt.typing import INT</p>
+
+<p>hello = [Symbol(s, INT) for s in "hello"]
+  world = [Symbol(s, INT) for s in "world"]
+  letters = set(hello+world)
+  domains = And([And(GE(l, Int(1)),
+                     LT(l, Int(10))) for l in letters])</p>
+
+<p>sum_hello = Plus(hello) # n-ary operators can take lists
+  sum_world = Plus(world) # as arguments
+  problem = And(Equals(sum_hello, sum_world),
+                Equals(sum_hello, Int(25)))
+  formula = And(domains, problem)</p>
+
+<p>print("Serialization of the formula:")
+  print(formula)</p>
+
+<p>model = get_model(formula)
+  if model:
+    print(model)
+  else:
+    print("No solution found")</p>
+
+<h1>
+<a id="solvers-installation" class="anchor" href="#solvers-installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Solvers Installation</h1>
+
+<p>PySMT does not depend directly on any solver. If you want to perform solving, you need to have at least one solver installed, and then call it via pySMT either through its native API, or passing through an SMT-LIB file.</p>
+
+<p>The script <em>pysmt-install</em> can be used to simplify the installation of the solvers:</p>
+
+<p>$ pysmt-install --msat
+will install MathSAT 5. This script does not install required dependencies for building the solver (e.g., make or gcc) and has been tested mainly on Linux Debian/Ubuntu systems. We suggest that you refer to the documentation of each solver to understand how to install it with its python bindings. Nevertheless, we try to keep <em>pysmt/cmd/install.py</em> as readable and documented as possible..</p>
+
+<p>Finally, for CVC4 and picosat, we have patches that need to be applied. The patches are available in the repository 'pysmt/solvers_patches' and should be applied against the following versions of the solvers:</p>
+
+<ul>
+<li>CVC4: Git revision 68f22235a62f5276b206e9a6692a85001beb8d42</li>
+<li>pycudd: 2.0.2</li>
+<li>picosat 960</li>
+</ul>
+
+<p>For instruction on how to use any SMT-LIB complaint solver with pySMT see examples/generic_smtlib.py</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/pysmt/pysmt">PySMT</a> is maintained by <a href="https://github.com/pysmt">pysmt</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
+
