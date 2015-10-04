@@ -1,5 +1,8 @@
 # Dockerfile to have a Jekyll env.
-# This assumes a volume is mounted with the contents.
+#
+# By default, this will serve the content on :4000. Run with:
+#   docker run --rm -ti -p 4000:4000 -v /<git-repo>:/www jekyll .
+# Assuming this image has been tagged as jekyll
 #
 FROM debian:latest
 
@@ -18,4 +21,5 @@ RUN cd /root; bundle install
 
 
 EXPOSE 4000
+
 CMD cd /www; bundle exec jekyll serve
